@@ -1,3 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+if (process.env.BOT_ACTIVE !== 'true') {
+  console.log("🤖 Bot is in standby mode (BOT_ACTIVE is not 'true'). Exiting safely.");
+  process.exit(0);
+}
+
 import { ImapFlow } from 'imapflow';
 import { simpleParser } from 'mailparser';
 import nodemailer from 'nodemailer';

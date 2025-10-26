@@ -1,0 +1,70 @@
+name: Lawn Turf Email Bot
+
+on:
+  schedule:
+    # We’ll trigger at four times per day in UTC.
+    # UK time switches between GMT (UTC) and BST (UTC+1). To keep things simple AND correct,
+    # we trigger at *both* the GMT and BST hours and let a runtime guard enforce the exact window.
+    - cron: '0 7,10,13,16 * * *'   # Matches 8,11,14,17 during BST (Mar–Oct roughly)
+    - cron: '0 8,11,14,17 * * *'   # Matches 8,11,14,17 during GMT (Nov–Mar roughly)
+  workflow_dispatch: {}  # allow manual runs from the Actions tab
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install deps
+        run: npm ci
+        # falls back to npm install if no package-lock.json is present
+
+      # (Optional) Write Google service account JSON to file if you use Calendar later
+      - name: Prepare Google key (optional)
+        if: ${{ env.GOOGLE_SERVICE_ACCOUNT_KEY != '' }}
+        run: |
+          mkdir -p keys
+          echo "$GOOGLE_SERVICE_ACCOUNT_KEY" > keys/service-account.json
+
+      # Enforce the UK window precisely at runtime using Europe/London time.
+      # This lets us keep the schedule simple while being DST-accurate.
+      - name: UK time guard (8:00, 11:00, 14:00, 17:00 only)
+        run: |
+          node -e "
+            const allowed = new Set(['08','11','14','17']);
+            const fmt = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',hour12:false,timeZone:'Europe/London'});
+            const hour = fmt.format(new Date());
+            if(!allowed.has(hour)){ console.log('⏳ Not an allowed UK hour ('+hour+'). Skipping.'); process.exit(78); }
+            console.log('✅ Allowed UK hour:', hour);
+          "
+
+      - name: Run bot
+        env:
+          # Email (IMAP/SMTP)
+          IMAP_HOST: ${{ secrets.IMAP_HOST }}
+          IMAP_PORT: ${{ secrets.IMAP_PORT }}
+          IMAP_USER: ${{ secrets.IMAP_USER }}
+          IMAP_PASS: ${{ secrets.IMAP_PASS }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+
+          # Chatbase
+          CHATBASE_AGENT_ID: ${{ secrets.CHATBASE_AGENT_ID }}
+          CHATBASE_API_KEY: ${{ secrets.CHATBASE_API_KEY }}
+
+          # Runtime safety toggle
+          BOT_ACTIVE: ${{ secrets.BOT_ACTIVE }}
+
+          # Calendar (optional)
+          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+        run: npm start
