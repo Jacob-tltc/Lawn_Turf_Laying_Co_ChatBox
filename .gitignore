@@ -1,0 +1,13 @@
+# Secrets folder
+secrets/
+
+# Environment file
+.env
+
+# Node modules (if using npm)
+node_modules/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+.vercel

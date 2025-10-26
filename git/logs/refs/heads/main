@@ -1,0 +1,14 @@
+0000000000000000000000000000000000000000 ff012ffc3dc1a4b840ba1b7287d7e7520dc8b1f1 Jacob-tltc <tltc.bot@gmail.com> 1750629949 +0100	clone: from https://github.com/Jacob-tltc/Lawn_Turf_Laying_Co_ChatBox.git
+ff012ffc3dc1a4b840ba1b7287d7e7520dc8b1f1 c2b7be51d034d63d41a9ff49f7299a0d909fd54e Jacob-tltc <tltc.bot@gmail.com> 1750634052 +0100	commit: Set up IMAP inbox reader and config files
+c2b7be51d034d63d41a9ff49f7299a0d909fd54e 3b64760e92462f5a868e1e0b4035f7cf0d438c96 Jacob-tltc <tltc.bot@gmail.com> 1750809693 +0100	commit: Add .gitignore and stop tracking .env and JSON key
+3b64760e92462f5a868e1e0b4035f7cf0d438c96 845a62a465499c2c19dac5babc05766299b1de40 Jacob-tltc <tltc.bot@gmail.com> 1750809797 +0100	commit: Cleaned up tracking; ignored sensitive files and updated config
+845a62a465499c2c19dac5babc05766299b1de40 0d7ceaf306fb97e6ba5cb0ea997566c80e255528 Jacob-tltc <tltc.bot@gmail.com> 1750810891 +0100	commit: Initial commit of automation and integration files
+0d7ceaf306fb97e6ba5cb0ea997566c80e255528 46278df262ff80304ed640161e8f19678c7b2215 Jacob-tltc <tltc.bot@gmail.com> 1750811727 +0100	rebase (finish): refs/heads/main onto e480491a1a32171db9c2a0c06fcc745dd5ab1a2c
+46278df262ff80304ed640161e8f19678c7b2215 dd9d06608cfcb24548a250b1fc9b88b4e080301a Jacob-tltc <tltc.bot@gmail.com> 1751165177 +0100	commit: Replace repo content with updated local project
+dd9d06608cfcb24548a250b1fc9b88b4e080301a b5a3343a85d99c4523ad9bd82d392d030be63403 Jacob-tltc <tltc.bot@gmail.com> 1751168798 +0100	commit: Fix Vercel function crash by correcting price-estimate handler
+b5a3343a85d99c4523ad9bd82d392d030be63403 f398d8bcf25ee71f7f7c9f41ade1f46fd8400190 Jacob-tltc <tltc.bot@gmail.com> 1751170412 +0100	commit: Simplified price-estimate.js using pricingEngine
+f398d8bcf25ee71f7f7c9f41ade1f46fd8400190 8285c712403b55e3a0ea1fdcd62467b60cda41d1 Jacob-tltc <tltc.bot@gmail.com> 1751172106 +0100	commit: Fix import path for pricingEngine.js
+8285c712403b55e3a0ea1fdcd62467b60cda41d1 6a832cac010a035c88ae717e206641ffe21ef260 Jacob-tltc <tltc.bot@gmail.com> 1751174637 +0100	commit: Fix import path for pricingEngine.js
+6a832cac010a035c88ae717e206641ffe21ef260 d18febf4492624f6c477b73dcc65b02b8d0c710b Jacob-tltc <tltc.bot@gmail.com> 1751175308 +0100	commit: Fix import path for pricingEngine on Vercel
+d18febf4492624f6c477b73dcc65b02b8d0c710b 5ed48db5f81e938cd8c01d2e3188bdec303c0f2d Jacob-tltc <tltc.bot@gmail.com> 1751175420 +0100	commit: Fix import path for pricingEngine on Vercel
+5ed48db5f81e938cd8c01d2e3188bdec303c0f2d 4699ffadf1c5813151b7322925c1ff39e6464933 Jacob-tltc <tltc.bot@gmail.com> 1751176114 +0100	commit: Fix: removed duplicate pricingTable declaration

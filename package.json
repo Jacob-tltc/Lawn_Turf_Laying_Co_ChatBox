@@ -1,0 +1,28 @@
+{
+  "name": "lawn_turf_laying_co_chat-box",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "This repository stores code for automation reading all incoming emails with customers' enquiries, generating replies by an AI chat box, and sending those replies back to a customer.",
+  "main": "processInbox.js",
+  "scripts": {
+    "start": "node processInbox.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jacob-tltc/Lawn_Turf_Laying_Co_ChatBox.git"
+  },
+  "keywords": [],
+  "author": "Jacob Litwin - Workflow Automation & Integration Specialist",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jacob-tltc/Lawn_Turf_Laying_Co_ChatBox/issues"
+  },
+  "homepage": "https://github.com/Jacob-tltc/Lawn_Turf_Laying_Co_ChatBox#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "imapflow": "^1.0.188",
+    "mailparser": "^3.7.3",
+    "node-fetch": "^3.3.2"
+  }
+}
