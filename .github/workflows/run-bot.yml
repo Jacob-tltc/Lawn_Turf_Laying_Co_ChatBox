@@ -49,10 +49,10 @@ jobs:
       - name: Run bot
         env:
           # Email (IMAP/SMTP)
-          IMAP1_HOST: ${{ secrets.IMAP_HOST }}
-          IMAP1_PORT: ${{ secrets.IMAP_PORT }}
-          IMAP1_USER: ${{ secrets.IMAP_USER }}
-          IMAP1_PASSWORD: ${{ secrets.IMAP_PASSWORD }}
+          IMAP1_HOST: ${{ secrets.IMAP1_HOST }}
+          IMAP1_PORT: ${{ secrets.IMAP1_PORT }}
+          IMAP1_USER: ${{ secrets.IMAP1_USER }}
+          IMAP1_PASSWORD: ${{ secrets.IMAP1_PASSWORD }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
