@@ -7,6 +7,9 @@ secrets/
 # Node modules (if using npm)
 node_modules/
 
+# Logs folder
+logs/
+
 # OS-specific
 .DS_Store
 Thumbs.db
