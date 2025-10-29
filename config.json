@@ -12,10 +12,18 @@
   "approved_subject_keywords": [],
   "approved_body_keywords": [],
   "maxBodyLength": null,
-  "monitored_inboxes":[
-    "mail@thelawnturflaying.co.uk",
-    "info@thelawnturflaying.co.uk",
-    "info@londonlawnturflaying.co.uk"
-  ],
   "maxEmailsToProcess": 5
+  
+  "monitored_inboxes":[
+    {
+      "label": "Mailbox1",
+      "address": "mail@thelawnturflaying.co.uk",
+      "passwordEnv": "IMAP1_PASSWORD"
+    },
+    {
+      "label": "Mailbox2",
+      "address": "info@thelawnturflaying.co.uk",
+      "passwordEnv": "IMAP2_PASSWORD"
+    }
+  ] 
 }
