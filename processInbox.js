@@ -62,7 +62,7 @@ async function cleanupOldLogs() {
   }
 }
 
-// Reusable function: processes one mailbox (your existing logic reused)
+// Reusable function: processes one mailbox
 async function processMailbox(account) {
   const imapUser = account.username;
   const client = new ImapFlow({
@@ -85,7 +85,18 @@ async function processMailbox(account) {
   await client.connect();
   console.log(`📥 Connected to IMAP as ${imapUser}`);
 
-  let lock = await client.getMailboxLock('INBOX');
+  // === Track processed UIDs so we don't reply twice ===
+  const processedFile = './logs/processed.json';
+  let processedUIDs = [];
+
+  try {
+    const raw = await fs.readFile(processedFile, 'utf8');
+    processedUIDs = JSON.parse(raw);
+  } catch {
+    processedUIDs = [];
+  }
+
+  const lock = await client.getMailboxLock('INBOX');
   try {
     let searchCriteria;
 
@@ -99,20 +110,21 @@ async function processMailbox(account) {
 
     const unseen = await client.search(searchCriteria);
     console.log(`🔎 Found ${unseen.length} unseen emails in ${imapUser}`);
-
     const toProcess = unseen.slice(0, config.maxEmailsToProcess);
 
     for (let seq of toProcess) {
       const message = await client.fetchOne(seq, { envelope: true, source: true, uid: true });
       const { envelope, source, uid } = message;
+
+      if (processedUIDs.includes(uid)) {
+        await writeLog(imapUser, `⚠️ UID ${uid} already processed — skipping`);
+        continue;
+      }
+
       const fromAddress = envelope.from[0].address.toLowerCase();
       const subject = (envelope.subject || '').toLowerCase();
       const domain = domainFromAddress(fromAddress);
 
-      // Use your existing filters and Chatbase logic here unchanged ↓↓↓
-      // (copy everything from inside your old for-loop, starting at
-      // “await writeLog(imapUser, `📨 Processing email UID ${uid}`)” down to
-      // “await writeLog(imapUser, `✅ Replied to UID ${uid}`);”)
       await writeLog(imapUser, `📨 Processing email UID ${uid} from ${fromAddress} | Subject: "${subject}"`);
 
       // Filtering logic
@@ -133,7 +145,7 @@ async function processMailbox(account) {
 
       const parsed = await simpleParser(source);
       const rawBodyText = parsed.text || '';
-      const bodyText = rawBodyText.toLowerCase(); // only used for filters
+      const bodyText = rawBodyText.toLowerCase();
 
       if (matchesAny(bodyText, config.ignore_body_keywords)) {
         await writeLog(imapUser, `⚠️ Ignored due to blocked body keyword.`);
@@ -168,9 +180,7 @@ async function processMailbox(account) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          messages: [
-            { role: 'user', content: modifiedBody }
-          ],
+          messages: [{ role: 'user', content: modifiedBody }],
           chatbotId: process.env.CHATBASE_AGENT_ID,
           temperature: 0.7
         })
@@ -191,6 +201,18 @@ async function processMailbox(account) {
         subject: `RE: ${envelope.subject}`,
         text: replyText
       });
+
+      // ✅ Mark as processed and as seen
+      processedUIDs.push(uid);
+      await fs.writeFile(processedFile, JSON.stringify(processedUIDs, null, 2));
+
+      try {
+       await client.messageFlagsAdd(uid, ['\\Seen'], { uid: true });
+       await writeLog(imapUser, `📬 Marked UID ${uid} as seen on server`);
+      } catch (flagErr) {
+        await writeLog(imapUser, `⚠️ Failed to mark UID ${uid} as seen: ${flagErr.message}`);
+      }
+
 
       await writeLog(imapUser, `✅ Replied to UID ${uid} | ${fromAddress}`);
     }

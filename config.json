@@ -1,17 +1,79 @@
 {
   "testFromEmail": 
-    "jacob.litwin@yahoo.com",
+    "",
   
-  "approved_senders_domains": [
-    "gmail.com",
-    "yahoo.com"
+  "approved_senders_domains": [],
+  
+  "ignore_senders_domains": [
+    "thelawnturflaying.co.uk",
+    "squareup.com",
+    "google.com",
+    "googlemail.com",
+    "paypal.com",
+    "xero.com",
+    "quickbooks.com",
+    "stripe.com"
   ],
-  "ignore_senders_domains": [],
-  "ignore_subject_keywords": [],
-  "ignore_body_keywords": [],
-  "approved_subject_keywords": [],
-  "approved_body_keywords": [],
-  "maxBodyLength": null,
+ 
+  "ignore_subject_keywords": [
+    "invoice",
+    "receipt",
+    "payment",
+    "statement",
+    "confirmation",
+    "order",
+    "delivery",
+    "tracking",
+    "newsletter",
+    "offer",
+    "promotion",
+    "spam",
+    "unsubscribe",
+    "security",
+    "verify",
+    "authentication"
+  ],
+  
+  "ignore_body_keywords": [
+    "newsletter",
+    "unsubscribe",
+    "do not reply",
+    "marketing preference",
+    "security alert",
+    "verification code",
+    "2FA"
+  ],
+  
+  "approved_subject_keywords": [
+    "quote",
+    "turf",
+    "lawn",
+    "laying",
+    "installation",
+    "estimate",
+    "price",
+    "availability",
+    "booking",
+    "garden",
+    "enquiry",
+    "customer"
+  ],
+ 
+  "approved_body_keywords": [
+    "turf",
+    "garden",
+    "grass",
+    "prep",
+    "soil",
+    "quote",
+    "booking",
+    "installation",
+    "fit",
+    "lay"
+  ],
+ 
+  "maxBodyLength": 3000,
+ 
   "maxEmailsToProcess": 5,
 
   "monitored_inboxes":[
