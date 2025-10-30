@@ -36,15 +36,15 @@ jobs:
 
       # Enforce the UK window precisely at runtime using Europe/London time.
       # This lets us keep the schedule simple while being DST-accurate.
-      - name: UK time guard (8:00, 11:00, 14:00, 17:00 only)
-        run: |
-          node -e "
-            const allowed = new Set(['08','11','14','17']);
-            const fmt = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',hour12:false,timeZone:'Europe/London'});
-            const hour = fmt.format(new Date());
-            if(!allowed.has(hour)){ console.log('⏳ Not an allowed UK hour ('+hour+'). Skipping.'); process.exit(78); }
-            console.log('✅ Allowed UK hour:', hour);
-          "
+      #- name: UK time guard (8:00, 11:00, 14:00, 17:00 only)
+      #  run: |
+      #    node -e "
+      #      const allowed = new Set(['08','11','14','17']);
+      #      const fmt = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',hour12:false,timeZone:'Europe/London'});
+      #      const hour = fmt.format(new Date());
+      #      if(!allowed.has(hour)){ console.log('⏳ Not an allowed UK hour ('+hour+'). Skipping.'); process.exit(78); }
+      #      console.log('✅ Allowed UK hour:', hour);
+      #    "
 
       - name: Run bot
         env:
